@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Lishy — Happy Girlfriend Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Work+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF5E8;
+    --paper-warm:#F5EAD4;
+    --ink:#212E3D;
+    --ink-soft:#4A5A6B;
+    --stamp:#A6402B;
+    --gold:#B5842A;
+    --pine:#2E5850;
+    --night:#141C24;
+    --rule: rgba(33,46,61,0.18);
+  }
+
+  *{margin:0; padding:0; box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--gold); color:var(--paper); }
+
+  .display{
+    font-family:'Fraunces', serif;
+  }
+
+  .mono{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.04em;
+  }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--stamp);
+  }
+
+  /* texture overlay for paper feel */
+  .grain{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:9999;
+    opacity:0.035;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- NAV DOTS ---------- */
+  .wayfinder{
+    position:fixed;
+    right:28px;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:500;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .wayfinder a{
+    width:9px; height:9px;
+    border-radius:50%;
+    border:1.5px solid var(--ink-soft);
+    background:transparent;
+    display:block;
+    transition:all .3s ease;
+  }
+  .wayfinder a.active{
+    background:var(--stamp);
+    border-color:var(--stamp);
+    transform:scale(1.3);
+  }
+  @media (max-width:800px){ .wayfinder{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:50% 30%;
+    filter:saturate(0.92) contrast(1.02);
+    transform:scale(1.06);
+  }
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(20,28,36,0.15) 0%, rgba(20,28,36,0.05) 30%, rgba(20,28,36,0.75) 100%);
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    padding:0 8vw 7vh;
+    color:var(--paper);
+  }
+  .hero-kicker{
+    font-family:'Space Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--paper-warm);
+    opacity:0.85;
+    margin-bottom:1.4rem;
+    display:flex;
+    align-items:center;
+    gap:0.8em;
+  }
+  .hero-kicker::before{
+    content:"";
+    width:34px; height:1px;
+    background:var(--paper-warm);
+    opacity:0.7;
+  }
+  .hero h1{
+    font-size:clamp(2.8rem, 8vw, 6.4rem);
+    font-weight:500;
+    line-height:0.98;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--paper-warm);
+  }
+  .hero-sub{
+    margin-top:1.6rem;
+    max-width:36ch;
+    font-size:1.05rem;
+    line-height:1.6;
+    font-weight:300;
+    color:var(--paper-warm);
+  }
+  .counter-row{
+    margin-top:2.6rem;
+    display:flex;
+    align-items:flex-end;
+    gap:2.4rem;
+    flex-wrap:wrap;
+  }
+  .counter-box .num{
+    font-family:'Fraunces', serif;
+    font-size:clamp(2.2rem, 4vw, 3.2rem);
+    font-weight:500;
+    line-height:1;
+  }
+  .counter-box .lbl{
+    margin-top:0.4rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    opacity:0.75;
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom:28px; left:8vw;
+    z-index:2;
+    color:var(--paper-warm);
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    opacity:0.7;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .scroll-cue .line{
+    width:1px; height:34px;
+    background:var(--paper-warm);
+    position:relative;
+    overflow:hidden;
+  }
+  .scroll-cue .line::after{
+    content:"";
+    position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--stamp);
+    animation:slide 1.8s ease-in-out infinite;
+  }
+  @keyframes slide{ 50%{top:100%;} 100%{top:100%;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{
+    position:relative;
+    padding:9rem 8vw;
+  }
+  @media (max-width:800px){ section{padding:6rem 6vw;} }
+
+  .rule{
+    height:1px;
+    background:var(--rule);
+    width:100%;
+  }
+
+  .section-head{
+    max-width:56ch;
+    margin-bottom:4rem;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-size:clamp(2rem, 4.4vw, 3.4rem);
+    font-weight:500;
+    line-height:1.05;
+    margin-top:0.7rem;
+  }
+  .section-head p{
+    margin-top:1.2rem;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:var(--ink-soft);
+    font-weight:300;
+    max-width:52ch;
+  }
+
+  /* ---------- LETTER ---------- */
+  .letter{
+    background:var(--paper-warm);
+  }
+  .letter-wrap{
+    max-width:64ch;
+    margin:0 auto;
+    text-align:left;
+  }
+  .letter .eyebrow{ display:block; margin-bottom:1.2rem; text-align:center;}
+  .letter-body{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:clamp(1.3rem, 2.6vw, 1.7rem);
+    line-height:1.65;
+    color:var(--ink);
+  }
+  .letter-body .drop{
+    font-style:normal;
+    font-weight:600;
+    font-size:3.2em;
+    float:left;
+    line-height:0.8;
+    padding-right:0.12em;
+    padding-top:0.05em;
+    color:var(--stamp);
+  }
+  .signoff{
+    margin-top:2.6rem;
+    text-align:right;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.3rem;
+  }
+
+  /* ---------- STAMP CARD ---------- */
+  .stamp-card{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:5vw;
+    align-items:center;
+    padding:6rem 0;
+  }
+  .stamp-card:nth-child(even){
+    grid-template-columns:0.9fr 1.1fr;
+  }
+  .stamp-card:nth-child(even) .stamp-media{ order:2; }
+  .stamp-card:nth-child(even) .stamp-text{ order:1; }
+
+  @media (max-width:860px){
+    .stamp-card, .stamp-card:nth-child(even){
+      grid-template-columns:1fr;
+      gap:2.4rem;
+      padding:3.5rem 0;
+    }
+    .stamp-card:nth-child(even) .stamp-media{ order:1; }
+    .stamp-card:nth-child(even) .stamp-text{ order:2; }
+  }
+
+  .stamp-media{
+    position:relative;
+  }
+  .stamp-media img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:2px;
+    box-shadow:0 30px 60px -20px rgba(20,28,36,0.35);
+  }
+  .stamp-media.tilt-l img{ transform:rotate(-2deg); }
+  .stamp-media.tilt-r img{ transform:rotate(2deg); }
+
+  .stamp-badge{
+    position:absolute;
+    width:118px; height:118px;
+    border-radius:50%;
+    border:2px dashed var(--stamp);
+    color:var(--stamp);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.6rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    line-height:1.3;
+    background:rgba(251,245,232,0.88);
+    transform:rotate(-14deg) scale(0.6);
+    opacity:0;
+    transition:transform .7s cubic-bezier(.2,1.4,.4,1), opacity .5s ease;
+    top:-24px; right:-24px;
+    z-index:3;
+    padding:10px;
+  }
+  .stamp-card:nth-child(even) .stamp-badge{ left:-24px; right:auto; }
+  .stamp-badge.in-view{
+    opacity:0.92;
+    transform:rotate(-14deg) scale(1);
+  }
+  .stamp-badge span{ display:block; }
+  .stamp-badge .big{ font-size:1rem; font-weight:700; margin:2px 0;}
+
+  .stamp-text .eyebrow{ margin-bottom:0.9rem; }
+  .stamp-text h3{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.7rem, 3vw, 2.4rem);
+    font-weight:500;
+    line-height:1.1;
+  }
+  .stamp-text p{
+    margin-top:1.1rem;
+    color:var(--ink-soft);
+    font-weight:300;
+    line-height:1.7;
+    max-width:46ch;
+  }
+  .coords{
+    margin-top:1.4rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    color:var(--pine);
+    letter-spacing:0.05em;
+  }
+
+  .duo-media{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+  }
+  .duo-media img{
+    width:100%; height:100%;
+    object-fit:cover;
+    aspect-ratio: 3/4;
+    border-radius:2px;
+    box-shadow:0 30px 60px -20px rgba(20,28,36,0.3);
+  }
+
+  /* ---------- BANFF (dark section) ---------- */
+  .cold{
+    background:var(--pine);
+    color:var(--paper);
+  }
+  .cold .section-head p{ color:rgba(251,245,232,0.72); }
+  .cold .eyebrow{ color:var(--gold); }
+  .cold .stamp-text h3{ color:var(--paper); }
+  .cold .stamp-text p{ color:rgba(251,245,232,0.72); }
+  .cold .coords{ color:var(--gold); }
+  .cold .stamp-badge{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:rgba(20,28,36,0.55);
+  }
+
+  /* ---------- FIELD DAY (postcard) ---------- */
+  .field{
+    background:var(--paper-warm);
+  }
+  .postcard{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:5vw;
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .postcard{ grid-template-columns:1fr; gap:2.4rem; }
+  }
+  .postcard-media{
+    position:relative;
+  }
+  .postcard-media img{
+    width:100%;
+    display:block;
+    border-radius:2px;
+    transform:rotate(-1.6deg);
+    box-shadow:0 30px 60px -20px rgba(20,28,36,0.35);
+  }
+  .postcard-badge{
+    position:absolute;
+    top:-22px; left:-22px;
+    width:104px; height:104px;
+    border-radius:50%;
+    border:2px dashed var(--pine);
+    color:var(--pine);
+    background:rgba(251,245,232,0.9);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.58rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    line-height:1.3;
+    transform:rotate(10deg) scale(0.6);
+    opacity:0;
+    transition:transform .7s cubic-bezier(.2,1.4,.4,1), opacity .5s ease;
+    z-index:2;
+  }
+  .postcard-badge.in-view{ opacity:0.92; transform:rotate(10deg) scale(1); }
+  .postcard-badge .big{ font-size:0.9rem; font-weight:700; margin:2px 0; }
+  .postcard-text .eyebrow{ margin-bottom:0.9rem; }
+  .postcard-text h3{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.7rem, 3vw, 2.4rem);
+    font-weight:500;
+    line-height:1.1;
+  }
+  .postcard-text p{
+    margin-top:1.1rem;
+    color:var(--ink-soft);
+    font-weight:300;
+    line-height:1.7;
+    max-width:44ch;
+  }
+  .postcard-text .coords{ margin-top:1.4rem; }
+
+  /* ---------- FAVORITE PORTRAIT (spotlight) ---------- */
+  .spotlight{
+    background:var(--night);
+    color:var(--paper-warm);
+    text-align:center;
+  }
+  .spotlight .eyebrow{
+    justify-content:center;
+    display:flex;
+    color:var(--gold);
+  }
+  .spotlight h2{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.8rem, 4vw, 2.8rem);
+    max-width:22ch;
+    margin:1rem auto 3rem;
+    line-height:1.2;
+  }
+  .keepsake{
+    position:relative;
+    width:min(360px, 80vw);
+    margin:0 auto;
+  }
+  .keepsake-frame{
+    border:10px solid var(--paper-warm);
+    border-bottom-width:44px;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.6);
+    transform:rotate(-2deg);
+  }
+  .keepsake-frame img{
+    width:100%; display:block;
+  }
+  .keepsake-cap{
+    position:absolute;
+    bottom:8px; left:0; right:0;
+    text-align:center;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color:var(--night);
+    font-size:0.85rem;
+  }
+  .spotlight-note{
+    margin:2.6rem auto 0;
+    max-width:42ch;
+    font-weight:300;
+    line-height:1.7;
+    color:rgba(251,245,232,0.72);
+  }
+
+  /* ---------- FIRST MEETING ---------- */
+  .first-meeting{
+    background:var(--paper);
+    border-top:1px solid var(--rule);
+    padding-top:6rem;
+  }
+  .fm-wrap{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:5vw;
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .fm-wrap{ grid-template-columns:1fr; gap:2.4rem; }
+  }
+  .fm-media{ position:relative; }
+  .fm-media img{
+    width:100%; display:block;
+    border-radius:2px;
+    transform:rotate(1.4deg);
+    box-shadow:0 30px 60px -20px rgba(20,28,36,0.35);
+  }
+  .fm-badge{
+    position:absolute;
+    top:-20px; right:-20px;
+    width:112px; height:112px;
+    border-radius:50%;
+    border:2px dashed var(--stamp);
+    color:var(--stamp);
+    background:rgba(251,245,232,0.9);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:0.58rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    line-height:1.3;
+    transform:rotate(-12deg) scale(0.6);
+    opacity:0;
+    transition:transform .7s cubic-bezier(.2,1.4,.4,1), opacity .5s ease;
+    z-index:2;
+  }
+  .fm-badge.in-view{ opacity:0.92; transform:rotate(-12deg) scale(1); }
+  .fm-badge .big{ font-size:0.88rem; font-weight:700; margin:2px 0; }
+  .fm-text h3{
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.7rem, 3vw, 2.4rem);
+    font-weight:500;
+    line-height:1.1;
+  }
+  .fm-text p{
+    margin-top:1.1rem;
+    color:var(--ink-soft);
+    font-weight:300;
+    line-height:1.7;
+    max-width:46ch;
+  }
+
+  /* ---------- GALLERY / US ---------- */
+  .gallery{
+    background:var(--paper);
+  }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1.6rem;
+  }
+  .polaroid{
+    background:#fff;
+    padding:14px 14px 46px;
+    box-shadow:0 20px 40px -18px rgba(20,28,36,0.3);
+    position:relative;
+  }
+  .polaroid:nth-child(1){ transform:rotate(-2.5deg); }
+  .polaroid:nth-child(2){ transform:rotate(2deg); margin-top:2.4rem;}
+  @media (max-width:800px){
+    .gallery-grid{ grid-template-columns:1fr; max-width:420px; margin:0 auto;}
+    .polaroid:nth-child(2){ margin-top:0; }
+  }
+  .polaroid img{
+    width:100%;
+    display:block;
+    aspect-ratio:4/5;
+    object-fit:cover;
+  }
+  .polaroid figcaption{
+    position:absolute;
+    bottom:12px; left:14px; right:14px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:0.95rem;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing{
+    background:var(--night);
+    color:var(--paper-warm);
+    text-align:center;
+    padding-top:8rem;
+    padding-bottom:6rem;
+  }
+  .closing .eyebrow{ color:var(--gold); justify-content:center; display:flex;}
+  .closing h2{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(2rem, 5vw, 3.6rem);
+    max-width:20ch;
+    margin:1.4rem auto 0;
+    line-height:1.15;
+  }
+  .closing .to-lishy{
+    margin-top:2.6rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    opacity:0.6;
+  }
+  .final-stamp{
+    margin:3rem auto 0;
+    width:150px; height:150px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    font-family:'Space Mono', monospace;
+    color:var(--gold);
+    letter-spacing:0.08em;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    opacity:0;
+    transform:scale(0.7) rotate(-8deg);
+    transition:all .8s cubic-bezier(.2,1.4,.4,1);
+  }
+  .final-stamp.in-view{ opacity:1; transform:scale(1) rotate(-8deg); }
+  .final-stamp .date{ font-size:1.1rem; font-weight:700; margin-top:4px; }
+
+  footer{
+    background:var(--night);
+    color:rgba(251,245,232,0.4);
+    text-align:center;
+    padding:1.6rem;
+    font-family:'Space Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    border-top:1px solid rgba(251,245,232,0.08);
+  }
+
+  /* reveal on scroll */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal, .stamp-badge, .final-stamp{ transition:none; opacity:1; transform:none; }
+    .scroll-cue .line::after{ animation:none; }
+  }
+
+  a:focus-visible, .wayfinder a:focus-visible{
+    outline:2px solid var(--stamp);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="wayfinder" aria-label="Section navigation">
+  <a href="#hero" data-label="Hero"></a>
+  <a href="#letter" data-label="Letter"></a>
+  <a href="#mexico" data-label="Mexico"></a>
+  <a href="#banff" data-label="Banff"></a>
+  <a href="#us" data-label="Us"></a>
+  <a href="#closing" data-label="Closing"></a>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="hero">
+  <img class="hero-img" src="images/preview (4).jpg" alt="Lishy standing on a frozen lake in front of the snow-capped Canadian Rockies, arms open">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">Happy Girlfriend Day</div>
+    <h1 class="display">For <em>Lishy</em></h1>
+    <p class="hero-sub">Every mountain, every ruin, every ordinary Tuesday — better because you're the one standing next to me in the photo.</p>
+    <div class="counter-row">
+      <div class="counter-box">
+        <div class="num mono" id="dayCount">—</div>
+        <div class="lbl">days as us</div>
+      </div>
+      <div class="counter-box">
+        <div class="num display" style="font-style:italic;">11.28.2024</div>
+        <div class="lbl">where it started</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="line"></div>keep going</div>
+</header>
+
+<!-- LETTER -->
+<section class="letter" id="letter">
+  <div class="letter-wrap reveal">
+    <span class="eyebrow">A small note</span>
+    <p class="letter-body"><span class="drop">K</span>anchan, happy Girlfriend Day. I don't need a calendar to tell me to be grateful for you, but I'll take any excuse to say it in writing: thank you for climbing ruins, freezing on glaciers, and laughing at my jokes in three different countries. This is a little corner of the internet for us, proof, in pixels, of a very good year.</p>
+    <p class="signoff"> yours, KUCHU PUCHUUUU</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- MEXICO -->
+<section id="mexico">
+  <div class="section-head reveal">
+    <span class="eyebrow">Chapter One · Yucatán, Mexico</span>
+    <h2 class="display">The trip that started it all on film.</h2>
+    <p>Ruins older than memory, caves lit like gold, and a dinner under the stars to close it out. Three stamps for one unforgettable trip.</p>
+  </div>
+
+  <div class="stamp-card reveal">
+    <div class="stamp-media tilt-l">
+      <img src="images/mexico-chichenitza.jpg" alt="Kanchan and her boyfriend standing together in front of the Chichen Itza pyramid under a blue sky">
+      <div class="stamp-badge"><span>Est.</span><span class="big">Chichén Itzá</span><span>Yucatán, MX</span></div>
+    </div>
+    <div class="stamp-text">
+      <span class="eyebrow">Stop 01</span>
+      <h3 class="display">Chichén Itzá</h3>
+      <p>Standing in front of a 1,500-year-old wonder, and somehow you're still the thing I looked at most that day.</p>
+      <div class="coords mono">20.6843° N, 88.5678° W</div>
+    </div>
+  </div>
+
+  <div class="stamp-card reveal">
+    <div class="stamp-media">
+      <div class="duo-media">
+        <img src="images/preview (5).jpg" alt="Kanchan and her boyfriend wearing orange helmets, arms raised, inside a limestone cave" style="transform:rotate(-1.5deg);">
+        <img src="images/preview (6).jpg" alt="The couple posing beside an Xplor por Xcaret sign inside the illuminated cave" style="transform:rotate(1.5deg); margin-top:1.6rem;">
+      </div>
+      <div class="stamp-badge"><span>Explored</span><span class="big">Xplor</span><span>Underground</span></div>
+    </div>
+    <div class="stamp-text">
+      <span class="eyebrow">Stop 02</span>
+      <h3 class="display">Deep in the caves</h3>
+      <p>Helmets on, hands up, a thousand years of stalactites over our heads — and you still found something to laugh about.</p>
+      <div class="coords mono">Xplor por Xcaret · Riviera Maya</div>
+    </div>
+  </div>
+
+  <div class="stamp-card reveal">
+    <div class="stamp-media tilt-r">
+      <img src="images/preview (2).jpg" alt="Kanchan and her boyfriend smiling at a candlelit poolside dinner table at night, plates cleared">
+      <div class="stamp-badge"><span>Same day</span><span class="big">Dinner</span><span>Under Stars</span></div>
+    </div>
+    <div class="stamp-text">
+      <span class="eyebrow">Stop 03</span>
+      <h3 class="display">Dinner, after</h3>
+      <p>Sun-tired and sandy-haired, we cleaned our plates and talked until the pool lights were the brightest thing left on. A perfect way to end a perfect day.</p>
+      <div class="coords mono">Same night · Cancun</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- BANFF -->
+<section class="cold" id="banff">
+  <div class="section-head reveal">
+    <span class="eyebrow">Chapter Two · The Canadian Rockies</span>
+    <h2 class="display">Then we traded sand for snow.</h2>
+    <p>Same girl, different jacket. Turns out you look just as at home on a frozen lake as you do on a beach.</p>
+  </div>
+
+  <div class="stamp-card reveal">
+    <div class="stamp-media">
+      <div class="duo-media">
+        <img src="images/preview (3).jpg" alt="Kanchan standing on a frozen lake looking back over her shoulder at the snowy peaks">
+        <img src="images/preview (4).jpg" alt="Kanchan with arms outstretched on the frozen lake, snowy mountains behind her" style="margin-top:1.6rem;">
+      </div>
+      <div class="stamp-badge"><span>Frozen</span><span class="big">Lake Louise</span><span>Alberta, CA</span></div>
+    </div>
+    <div class="stamp-text">
+      <span class="eyebrow">Stop 01</span>
+      <h3 class="display">Standing on frozen water</h3>
+      <p>You, tiny against a wall of rock, arms out like you were trying to hug the whole valley. This is the photo I'd frame first.</p>
+      <div class="coords mono">51.4254° N, 116.1773° W</div>
+    </div>
+  </div>
+
+  <div class="stamp-card reveal">
+    <div class="stamp-media tilt-r">
+      <img src="images/preview (8).jpg" alt="Kanchan smiling at a mountain overlook above a river valley in Alberta">
+      <div class="stamp-badge"><span>Overlook</span><span class="big">Bow Valley</span><span>Alberta, CA</span></div>
+    </div>
+    <div class="stamp-text">
+      <span class="eyebrow">Stop 02</span>
+      <h3 class="display">Above it all</h3>
+      <p>We climbed for that view, and you still turned around to smile at the camera before you even looked at the mountains. That's the whole thing about you, really.</p>
+      <div class="coords mono">51.0891° N, 115.3596° W</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FIELD DAY -->
+<section class="field" id="field">
+  <div class="postcard reveal">
+    <div class="postcard-media">
+      <img src="images/preview (9).jpg" alt="Kanchan looking back over her shoulder in a field of red, white, and pink tulips">
+      <div class="postcard-badge"><span>Field</span><span class="big">Day</span><span>Spring</span></div>
+    </div>
+    <div class="postcard-text">
+      <span class="eyebrow">Interlude · Field Day</span>
+      <h3 class="display">Rows and rows of tulips, and you still stood out.</h3>
+      <p>Just a field, a sundress, and you looking back over at me bcs you love me...right?</p>
+      <div class="coords mono">a very good spring afternoon</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FAVORITE PORTRAIT -->
+<section class="spotlight">
+  <span class="eyebrow">A confession</span>
+  <h2 class="reveal">This might just be my favorite photo of you.</h2>
+  <div class="keepsake reveal">
+    <div class="keepsake-frame">
+      <img src="images/preview (10).jpg" alt="Kanchan smiling in an embroidered cream and red suit, taking a selfie">
+    </div>
+    <div class="keepsake-cap"></div>
+  </div>
+  <p class="spotlight-note reveal">No mountain or ruin needed for this one, just you, dressed up.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- US / CANDIDS -->
+<section class="gallery" id="us">
+  <div class="section-head reveal">
+    <span class="eyebrow">Chapter Three · Just Us</span>
+    <h2 class="display">The unposed ones are my favorite.</h2>
+    <p>No ruins, no mountains — just a car ride and a dinner where you kept smiling around a fork.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <figure class="polaroid">
+      <img src="images/preview (1).jpg" alt="Close-up selfie of the couple leaning together in the car">
+      <figcaption>heads together, always</figcaption>
+    </figure>
+    <figure class="polaroid">
+      <img src="images/preview (7).jpg" alt="He feeds her a bite of food across the table at a cozy brick-walled restaurant">
+      <figcaption>one more bite, I promise</figcaption>
+    </figure>
+  </div>
+
+  <div class="fm-wrap first-meeting reveal">
+    <div class="fm-media">
+      <img src="images/preview (11).jpg" alt="Close-up selfie of the couple resting cheek to cheek, a quiet unposed moment">
+      <div class="fm-badge"><span>First</span><span class="big">Meeting</span><span>You & my family</span></div>
+    </div>
+    <div class="fm-text">
+      <span class="eyebrow">A quiet favorite</span>
+      <h3 class="display">The night I met your siblings.</h3>
+      <p>No filter, no pose, no idea the photo was even happening. Just us, right after I met the people you love most — and somehow I already fit. This is my most pure photo of the two of us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" id="closing">
+  <span class="eyebrow">Last page</span>
+  <h2 class="reveal">Here's to every trip we haven't taken yet, Lishy.</h2>
+  <div class="final-stamp reveal">
+    <span>Since</span>
+    <span class="date">11.28.24</span>
+    <span>& counting</span>
+  </div>
+  <p class="to-lishy reveal">happy girlfriend day — i love you</p>
+</section>
+
+<footer>made with you in mind</footer>
+
+<script>
+  // day counter
+  (function(){
+    const start = new Date(2024, 10, 28); // Nov 28 2024
+    const el = document.getElementById('dayCount');
+    function update(){
+      const now = new Date();
+      const diff = Math.floor((now - start) / (1000*60*60*24));
+      el.textContent = diff.toLocaleString();
+    }
+    update();
+  })();
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .stamp-badge, .final-stamp');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.18 });
+  revealEls.forEach(el=>io.observe(el));
+
+  // wayfinder active state
+  const sections = ['hero','letter','mexico','banff','us','closing'].map(id=>document.getElementById(id));
+  const navLinks = document.querySelectorAll('.wayfinder a');
+  const navIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx = sections.indexOf(entry.target);
+        navLinks.forEach(l=>l.classList.remove('active'));
+        if(navLinks[idx]) navLinks[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s=> s && navIO.observe(s));
+</script>
+
+</body>
+</html>
